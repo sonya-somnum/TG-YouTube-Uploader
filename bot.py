@@ -17,8 +17,7 @@ Jebot = Client(
 
 YTDL_REGEX = (r"^((?:https?:)?\/\/)"
               r"?((?:www|m)\.)"
-              r"?((?:youtube\.com|youtu\.be|xvideos\.com|pornhub\.com"
-              r"|xhamster\.com|xnxx\.com))"
+              r"?((?:youtube\.com|youtu\.be"
               r"(\/)([-a-zA-Z0-9()@:%_\+.~#?&//=]*)([\w\-]+)(\S+)?$")
 s2tw = OpenCC('s2tw.json').convert
 
@@ -28,78 +27,7 @@ async def start(client, message):
    if message.chat.type == 'private':
        await Jebot.send_message(
                chat_id=message.chat.id,
-               text="""<b>Hello! This is a YouTube Uploader Bot
-
-I can download video or audio from Youtube. Made by @TheTeleRoid 🇮🇳
-
-Hit help button to find out more about how to use me</b>""",   
-                            reply_markup=InlineKeyboardMarkup(
-                                [[
-                                        InlineKeyboardButton(
-                                            "⭕ Channel ⭕", url="https://t.me/TeleRoidGroup"),
-                                        InlineKeyboardButton(
-                                            "🛑 Support 🛑", url="https://t.me/TeleRoid14")
-                                    ],[
-                                      InlineKeyboardButton(
-                                            "Source Code", url="https://github.com/P-Phreak/TG-YouTube-Uploader")
-                                    ]]
-                            ),        
-            disable_web_page_preview=True,        
-            parse_mode="html")
-
-@bot.on_message(filters.command("help"))
-async def help(client, message):
-    if message.chat.type == 'private':   
-        await Jebot.send_message(
-               chat_id=message.chat.id,
-               text="""<b>YouTube Bot Help!
-
-Just send a Youtube url to download it in video or audio format!
-
-~ @TeleRoidGroup</b>""",
-        reply_markup=InlineKeyboardMarkup(
-                                [[
-                                        InlineKeyboardButton(
-                                            "⭕ Channel ⭕", url="https://t.me/TeleRoidGroup"),
-                                        InlineKeyboardButton(
-                                            "🛑 Support 🛑", url="https://t.me/TeleRoid14"),
-                                  ],[
-                                        InlineKeyboardButton(
-                                            "About Meh👤", url="https://t.me/TheTeleRoid")
-                                    ]]
-                            ),        
-            disable_web_page_preview=True,        
-            parse_mode="html")
-
-@bot.on_message(filters.command("about"))
-async def about(client, message):
-    if message.chat.type == 'private':   
-        await Jebot.send_message(
-               chat_id=message.chat.id,
-               text="""<b>About TeleRoid YouTube Bot!</b>
-
-<b>👨‍💻 Developer:</b> <a href="https://t.me/PredatorHackerzZ_bot">Predator 🇮🇳</a>
-
-<b>💁‍♂️ Support:</b> <a href="https://t.me/TeleRoid14">TeleRoid Support</a>
-
-<b>😇 Channel :</b> <a href="https://t.me/TeleRoidGroup">TeleRoid Updates </a>
-
-<b>📚 Library:</b> <a href="https://github.com/pyrogram/pyrogram">Pyrogram</a>
-
-<b>🤖 BotList :</b> <a href="https://t.me/TGRobot_List"> Telegram Bots </a>
-
-<b>📌 Source : </b> <a href="https://GitHub.com/P-Phreak/TG-YouTube-Uploader"> Click Here </a>
-
-<b>~ @TeleRoidGroup</b>""",
-     reply_markup=InlineKeyboardMarkup(
-                                [[
-                                        InlineKeyboardButton(
-                                            "⭕ Join Our Channel ⭕", url="https://t.me/TeleRoidGroup"),
-                                      
-                                    ]]
-                            ),        
-            disable_web_page_preview=True,        
-            parse_mode="html")
+               text="""<b>Привет! Это бот для загрузки видео с Youtube! </b>""", disable_web_page_preview=True, parse_mode="html")
 
 
 # https://docs.pyrogram.org/start/examples/bot_keyboards
@@ -110,16 +38,16 @@ async def about(client, message):
                    & filters.regex(YTDL_REGEX))
 async def ytdl_with_button(_, message: Message):
     await message.reply_text(
-        "**Choose download type👇**",
+        "**Выбери тип загрузки**",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        "Audio 🎵",
+                        "Аудио 🎵",
                         callback_data="ytdl_audio"
                     ),
                     InlineKeyboardButton(
-                        "Video 🎬",
+                        "Видео 🎬",
                         callback_data="ytdl_video"
                     )
                 ]
@@ -222,7 +150,7 @@ async def callback_query_ytdl_video(_, callback_query):
             await message.reply_chat_action("typing")
             info_dict = ydl.extract_info(url, download=False)
             # download
-            await callback_query.edit_message_text("**Downloading video...**")
+            await callback_query.edit_message_text("**Загрузка видео...**")
             ydl.process_info(info_dict)
             # upload
             video_file = ydl.prepare_filename(info_dict)
@@ -324,7 +252,6 @@ async def button(bot, update):
 print(
     """
 Bot Started!
-Join **@TGRobot_List**
 """
 )
 
